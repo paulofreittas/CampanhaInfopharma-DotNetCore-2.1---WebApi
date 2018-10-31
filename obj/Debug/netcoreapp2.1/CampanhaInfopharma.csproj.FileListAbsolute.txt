@@ -1,0 +1,14 @@
+F:\CampanhaInfopharma\bin\Debug\netcoreapp2.1\CampanhaInfopharma.deps.json
+F:\CampanhaInfopharma\bin\Debug\netcoreapp2.1\CampanhaInfopharma.runtimeconfig.json
+F:\CampanhaInfopharma\bin\Debug\netcoreapp2.1\CampanhaInfopharma.runtimeconfig.dev.json
+F:\CampanhaInfopharma\bin\Debug\netcoreapp2.1\CampanhaInfopharma.dll
+F:\CampanhaInfopharma\bin\Debug\netcoreapp2.1\CampanhaInfopharma.pdb
+F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.csprojAssemblyReference.cache
+F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.csproj.CoreCompileInputs.cache
+F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.RazorAssemblyInfo.cache
+F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.RazorAssemblyInfo.cs
+F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.AssemblyInfoInputs.cache
+F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.AssemblyInfo.cs
+F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.RazorTargetAssemblyInfo.cache
+F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.dll
+F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.pdb
