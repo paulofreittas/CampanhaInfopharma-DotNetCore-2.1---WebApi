@@ -30,7 +30,9 @@ namespace CampanhaInfopharma
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("CampanhaInfopharma")));
+            services.AddTransient<IDrogariaRepository, DrogariaRepository>();
             services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
+            services.AddTransient<IContatoDrogariaRepository, ContatoDrogariaRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
