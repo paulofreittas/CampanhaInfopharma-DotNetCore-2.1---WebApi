@@ -17,7 +17,5 @@ namespace CampanhaInfopharma.Models
         public string Cidade { get; set; }
         [Required]
         public string Estado { get; set; }
-
-        public virtual ContatoDrogaria ContatoDrogaria { get; set; }
     }
 }

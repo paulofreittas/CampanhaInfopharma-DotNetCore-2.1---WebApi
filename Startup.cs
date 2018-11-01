@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using CampanhaInfopharma.EFContext;
 using CampanhaInfopharma.IRepository;
 using CampanhaInfopharma.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CampanhaInfopharma
 {
@@ -32,8 +35,34 @@ namespace CampanhaInfopharma
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("CampanhaInfopharma")));
             services.AddTransient<IDrogariaRepository, DrogariaRepository>();
             services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
-            services.AddTransient<IContatoDrogariaRepository, ContatoDrogariaRepository>();
+            services.AddTransient<IContatoDrogariaRepository, ContatoDrogariaRepository>(); 
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+                options => {
+                    options.TokenValidationParameters = new TokenValidationParameters {
+                        ValidateAudience = false,
+                        ValidateIssuer = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ClockSkew = TimeSpan.Zero,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKey"]))
+                    };
+
+                    options.Events = new JwtBearerEvents{
+                        OnAuthenticationFailed = context => {
+                            Console.WriteLine("Token Inválido! " + context.Exception.Message);
+                            return Task.CompletedTask;
+                        },
+                        OnTokenValidated = context => {
+                            Console.WriteLine("Token válido! " + context.SecurityToken);
+                            return Task.CompletedTask;
+                        }
+                    };
+                }
+            );
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +77,7 @@ namespace CampanhaInfopharma
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
