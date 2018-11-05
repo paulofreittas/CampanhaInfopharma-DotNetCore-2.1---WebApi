@@ -37,6 +37,8 @@ namespace CampanhaInfopharma
             services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
             services.AddTransient<IContatoDrogariaRepository, ContatoDrogariaRepository>(); 
 
+            services.AddCors();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
                 options => {
                     options.TokenValidationParameters = new TokenValidationParameters {
@@ -77,6 +79,11 @@ namespace CampanhaInfopharma
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
