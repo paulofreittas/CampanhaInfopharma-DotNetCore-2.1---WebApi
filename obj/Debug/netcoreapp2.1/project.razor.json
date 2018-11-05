@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "ProjectFilePath": "d:\\CampanhaInfopharma\\CampanhaInfopharma.csproj",
+=======
+  "ProjectFilePath": "f:\\CampanhaInfopharma\\CampanhaInfopharma.csproj",
+>>>>>>> d28c6fb3ec2f68a41175eb9d5738bcf97445ee7e
   "TargetFramework": "netcoreapp2.1",
   "TagHelpers": [],
   "Configuration": {

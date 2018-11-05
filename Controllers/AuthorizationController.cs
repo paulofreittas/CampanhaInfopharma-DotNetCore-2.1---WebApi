@@ -52,11 +52,14 @@ namespace CampanhaInfopharma.Controllers
                 );
 
                 return Ok (new {
-                    token = new JwtSecurityTokenHandler().WriteToken(token)
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    id = func.Id,
+                    nome = func.Nome,
+                    corMarcacao = func.CorMarcacao
                 });
             }
 
-            return BadRequest("Usuário ou senha inválidos!");
+            return Unauthorized();
         }
     }
 }

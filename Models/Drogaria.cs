@@ -12,7 +12,7 @@ namespace CampanhaInfopharma.Models
         [Required]
         [MaxLength(18)]
         public string CNPJ { get; set; }
-        public string NomeResponsavel { get; set; }
+        public string NomeContato { get; set; }
         [Required]
         public string Cidade { get; set; }
         [Required]
