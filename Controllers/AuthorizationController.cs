@@ -47,7 +47,7 @@ namespace CampanhaInfopharma.Controllers
                 // gerando o token
                 var token = new JwtSecurityToken(
                     claims: claims,
-                    expires: DateTime.Now.AddHours(10),
+                    expires: DateTime.Now.AddHours(1),
                     signingCredentials: creds
                 );
 
@@ -59,7 +59,7 @@ namespace CampanhaInfopharma.Controllers
                 });
             }
 
-            return Unauthorized();
+            return BadRequest("Dados inválidos!");
         }
     }
 }

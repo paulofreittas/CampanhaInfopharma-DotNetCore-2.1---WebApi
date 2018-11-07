@@ -36,6 +36,15 @@ namespace CampanhaInfopharma.Repository
             return _ctx.Drogarias.ToList();
         }
 
+        public IEnumerable<Drogaria> GetWithParams(string search, int page)
+        {
+            if (string.IsNullOrEmpty(search))
+            {
+                return _ctx.Drogarias.ToList();
+            }
+            return _ctx.Drogarias.FromSql($"SELECT * FROM dbo.Drogaria where RazaoSocial like '%{search}%' or NomeFantasia like '%{search}%' or CNPJ like '%{search}%' or NomeContato like '%{search}%' or Cidade like '%{search}%' or Estado like '%{search}%'", search).ToList();
+        }
+
         public void Remove(int id)
         {
             var drog = _ctx.Drogarias.FirstOrDefault(c => c.Id == id);

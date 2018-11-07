@@ -3,6 +3,8 @@ using CampanhaInfopharma.IRepository;
 using CampanhaInfopharma.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CampanhaInfopharma.Controllers
 {
@@ -16,10 +18,27 @@ namespace CampanhaInfopharma.Controllers
             _drogariaRepository = drogariaRepository;
         }
 
+        // [HttpGet]
+        // public IEnumerable<Drogaria> GetAll()
+        // {
+        //     return _drogariaRepository.GetAll();
+        // }
+
         [HttpGet]
-        public IEnumerable<Drogaria> GetAll()
+        public DrogariaDTO GetWithParams([FromQuery(Name = "search")] string search, [FromQuery(Name = "page")] int page)
         {
-            return _drogariaRepository.GetAll();
+            if (page == 0)
+                page = 1;
+
+            var result = _drogariaRepository.GetWithParams(search, page);
+            var numberItens = result as ICollection<Drogaria>;
+
+            return new DrogariaDTO {
+                NumeroResultados = numberItens.Count,
+                Pagina = page,
+                Resultado = result
+            };
+           // return _drogariaRepository.GetWithParams(search, page);
         }
 
         [HttpGet("{id}", Name="GetDrogaria")]
