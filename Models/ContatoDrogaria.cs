@@ -7,16 +7,14 @@ namespace CampanhaInfopharma.Models
 {
     public class ContatoDrogaria
     {
-        public DateTime DataUltimaAlteracao { get; set; }
+        public int Id { get; set; }
+        public DateTime DataAlteracao { get; set; }
         [Required]
-        [ForeignKey("Funcionario")]
-        public int FuncionarioIdFk { get; set; }
-        [Key, ForeignKey("Drogaria")]
+        [ForeignKey("Drogaria")]
         public int DrogariaIdFk { get; set; }
         public string Observacao { get; set; }
         public Status Status { get; set; }
 
         public virtual Drogaria Drogaria { get; set; }
-        public virtual Funcionario Funcionario { get; set; }
     }
 }

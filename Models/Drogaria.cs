@@ -1,4 +1,6 @@
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CampanhaInfopharma.Models
 {
@@ -17,5 +19,9 @@ namespace CampanhaInfopharma.Models
         public string Cidade { get; set; }
         [Required]
         public string Estado { get; set; }
+        [ForeignKey("Funcionario")]
+        public Nullable<int> FuncionarioIdFk { get; set; }
+
+        public virtual Funcionario Funcionario { get; set; }
     }
 }

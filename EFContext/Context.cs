@@ -28,8 +28,6 @@ namespace CampanhaInfopharma.EFContext
             modelBuilder.Entity<Drogaria>().ToTable("Drogaria");
             modelBuilder.Entity<ContatoDrogaria>().ToTable("ContatoDrogaria");
 
-            modelBuilder.Entity<ContatoDrogaria>().Property(c => c.FuncionarioIdFk).HasColumnName("FuncionarioIdFk");
-
             base.OnModelCreating(modelBuilder);
         }
     }

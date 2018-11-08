@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CampanhaInfopharma.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20181101040245_AddLogin")]
-    partial class AddLogin
+    [Migration("20181108031323_DbGenerate")]
+    partial class DbGenerate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,20 +23,21 @@ namespace CampanhaInfopharma.Migrations
 
             modelBuilder.Entity("CampanhaInfopharma.Models.ContatoDrogaria", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DataAlteracao");
+
                     b.Property<int>("DrogariaIdFk");
-
-                    b.Property<DateTime>("DataUltimaAlteracao");
-
-                    b.Property<int>("FuncionarioIdFk")
-                        .HasColumnName("FuncionarioIdFk");
 
                     b.Property<string>("Observacao");
 
                     b.Property<int>("Status");
 
-                    b.HasKey("DrogariaIdFk");
+                    b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioIdFk");
+                    b.HasIndex("DrogariaIdFk");
 
                     b.ToTable("ContatoDrogaria");
                 });
@@ -57,15 +58,19 @@ namespace CampanhaInfopharma.Migrations
                     b.Property<string>("Estado")
                         .IsRequired();
 
+                    b.Property<int?>("FuncionarioIdFk");
+
+                    b.Property<string>("NomeContato");
+
                     b.Property<string>("NomeFantasia")
                         .IsRequired();
-
-                    b.Property<string>("NomeResponsavel");
 
                     b.Property<string>("RazaoSocial")
                         .IsRequired();
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FuncionarioIdFk");
 
                     b.ToTable("Drogaria");
                 });
@@ -95,11 +100,13 @@ namespace CampanhaInfopharma.Migrations
                         .WithMany()
                         .HasForeignKey("DrogariaIdFk")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
 
+            modelBuilder.Entity("CampanhaInfopharma.Models.Drogaria", b =>
+                {
                     b.HasOne("CampanhaInfopharma.Models.Funcionario", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioIdFk")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("FuncionarioIdFk");
                 });
 #pragma warning restore 612, 618
         }

@@ -36,13 +36,18 @@ namespace CampanhaInfopharma.Repository
             return _ctx.Drogarias.ToList();
         }
 
-        public IEnumerable<Drogaria> GetWithParams(string search, int page)
+        public KeyValuePair<int, IEnumerable<Drogaria>> GetWithParams(string search, int page)
         {
+            int numeroItens = 0;
+
             if (string.IsNullOrEmpty(search))
             {
-                return _ctx.Drogarias.ToList();
+                numeroItens = _ctx.Drogarias.Include(x => x.Funcionario).Count();
+                return new KeyValuePair<int, IEnumerable<Drogaria>>(numeroItens, _ctx.Drogarias.Include(x => x.Funcionario).Skip(25*(page)).Take(25).ToList());
             }
-            return _ctx.Drogarias.FromSql($"SELECT * FROM dbo.Drogaria where RazaoSocial like '%{search}%' or NomeFantasia like '%{search}%' or CNPJ like '%{search}%' or NomeContato like '%{search}%' or Cidade like '%{search}%' or Estado like '%{search}%'", search).ToList();
+
+            numeroItens = _ctx.Drogarias.Include(x => x.Funcionario).FromSql($"SELECT * FROM dbo.Drogaria where RazaoSocial like '%{search}%' or NomeFantasia like '%{search}%' or CNPJ like '%{search}%' or NomeContato like '%{search}%' or Cidade like '%{search}%' or Estado like '%{search}%'", search).Count();
+            return new KeyValuePair<int, IEnumerable<Drogaria>>(numeroItens, _ctx.Drogarias.FromSql($"SELECT * FROM dbo.Drogaria where RazaoSocial like '%{search}%' or NomeFantasia like '%{search}%' or CNPJ like '%{search}%' or NomeContato like '%{search}%' or Cidade like '%{search}%' or Estado like '%{search}%'", search).Include(x => x.Funcionario).Skip(25*(page)).Take(25).ToList());
         }
 
         public void Remove(int id)

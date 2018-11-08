@@ -27,16 +27,13 @@ namespace CampanhaInfopharma.Controllers
         [HttpGet]
         public DrogariaDTO GetWithParams([FromQuery(Name = "search")] string search, [FromQuery(Name = "page")] int page)
         {
-            if (page == 0)
-                page = 1;
-
             var result = _drogariaRepository.GetWithParams(search, page);
-            var numberItens = result as ICollection<Drogaria>;
+          //  var numberItens = result as ICollection<Drogaria>;
 
             return new DrogariaDTO {
-                NumeroResultados = numberItens.Count,
+                NumeroResultados = result.Key,
                 Pagina = page,
-                Resultado = result
+                Resultado = result.Value
             };
            // return _drogariaRepository.GetWithParams(search, page);
         }
