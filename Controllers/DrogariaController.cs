@@ -25,9 +25,9 @@ namespace CampanhaInfopharma.Controllers
         // }
 
         [HttpGet]
-        public DrogariaDTO GetWithParams([FromQuery(Name = "search")] string search, [FromQuery(Name = "page")] int page)
+        public DrogariaDTO GetWithParams([FromQuery(Name = "search")] string search, [FromQuery(Name = "semFuncVinculado")] bool semFuncVinculado, [FromQuery(Name = "page")] int page)
         {
-            var result = _drogariaRepository.GetWithParams(search, page);
+            var result = _drogariaRepository.GetWithParams(search, semFuncVinculado, page);
           //  var numberItens = result as ICollection<Drogaria>;
 
             return new DrogariaDTO {

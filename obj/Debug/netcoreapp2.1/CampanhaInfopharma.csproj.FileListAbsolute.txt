@@ -12,3 +12,17 @@ F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.AssemblyInfo.cs
 F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.RazorTargetAssemblyInfo.cache
 F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.dll
 F:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.pdb
+D:\CampanhaInfopharma\bin\Debug\netcoreapp2.1\CampanhaInfopharma.deps.json
+D:\CampanhaInfopharma\bin\Debug\netcoreapp2.1\CampanhaInfopharma.runtimeconfig.json
+D:\CampanhaInfopharma\bin\Debug\netcoreapp2.1\CampanhaInfopharma.runtimeconfig.dev.json
+D:\CampanhaInfopharma\bin\Debug\netcoreapp2.1\CampanhaInfopharma.dll
+D:\CampanhaInfopharma\bin\Debug\netcoreapp2.1\CampanhaInfopharma.pdb
+D:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.csprojAssemblyReference.cache
+D:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.csproj.CoreCompileInputs.cache
+D:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.RazorAssemblyInfo.cache
+D:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.RazorAssemblyInfo.cs
+D:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.AssemblyInfoInputs.cache
+D:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.AssemblyInfo.cs
+D:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.RazorTargetAssemblyInfo.cache
+D:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.dll
+D:\CampanhaInfopharma\obj\Debug\netcoreapp2.1\CampanhaInfopharma.pdb
