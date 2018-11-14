@@ -33,6 +33,8 @@ namespace CampanhaInfopharma.Migrations
 
                     b.Property<int>("Status");
 
+                    b.Property<int>("TipoProposta");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DrogariaIdFk");

@@ -14,7 +14,7 @@ namespace CampanhaInfopharma.Models
         public int DrogariaIdFk { get; set; }
         public string Observacao { get; set; }
         public Status Status { get; set; }
-
+        public TipoProposta TipoProposta { get; set; }
         public virtual Drogaria Drogaria { get; set; }
     }
 }

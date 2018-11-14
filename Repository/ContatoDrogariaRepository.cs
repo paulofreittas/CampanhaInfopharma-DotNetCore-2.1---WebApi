@@ -28,7 +28,7 @@ namespace CampanhaInfopharma.Repository
 
         public IEnumerable<ContatoDrogaria> GetAll()
         {
-            return _ctx.ContatoDrogarias.Include(c => c.Drogaria).ToList();
+            return _ctx.ContatoDrogarias.Include(c => c.Drogaria).ThenInclude(c => c.Funcionario).ToList();
         }
 
         public void Remove(int id)

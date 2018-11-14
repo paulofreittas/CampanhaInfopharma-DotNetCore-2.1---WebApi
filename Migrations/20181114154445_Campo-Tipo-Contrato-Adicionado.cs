@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CampanhaInfopharma.Migrations
 {
-    public partial class DbGenerate : Migration
+    public partial class CampoTipoContratoAdicionado : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,7 +58,8 @@ namespace CampanhaInfopharma.Migrations
                     DataAlteracao = table.Column<DateTime>(nullable: false),
                     DrogariaIdFk = table.Column<int>(nullable: false),
                     Observacao = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false)
+                    Status = table.Column<int>(nullable: false),
+                    TipoProposta = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

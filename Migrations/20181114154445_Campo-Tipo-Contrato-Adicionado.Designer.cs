@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CampanhaInfopharma.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20181108031323_DbGenerate")]
-    partial class DbGenerate
+    [Migration("20181114154445_Campo-Tipo-Contrato-Adicionado")]
+    partial class CampoTipoContratoAdicionado
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,6 +34,8 @@ namespace CampanhaInfopharma.Migrations
                     b.Property<string>("Observacao");
 
                     b.Property<int>("Status");
+
+                    b.Property<int>("TipoProposta");
 
                     b.HasKey("Id");
 

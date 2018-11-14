@@ -54,6 +54,8 @@ namespace CampanhaInfopharma.Controllers
                 return Ok (new {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     id = func.Id,
+                    login = func.Login,
+                    senha = func.Senha,
                     nome = func.Nome,
                     corMarcacao = func.CorMarcacao
                 });
