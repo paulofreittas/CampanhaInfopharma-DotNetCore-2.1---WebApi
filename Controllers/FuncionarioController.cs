@@ -3,12 +3,14 @@ using CampanhaInfopharma.IRepository;
 using CampanhaInfopharma.Models;
 using CampanhaInfopharma.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CampanhaInfopharma.Controllers
 {
     [Authorize()]
     [Route("api/[Controller]")]
+    [DisableCors]
     public class FuncionarioController : Controller
     {
         private readonly IFuncionarioRepository _funcionarioRepository;

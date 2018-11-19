@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using CampanhaInfopharma.IRepository;
 using CampanhaInfopharma.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CampanhaInfopharma.Controllers
 {
     [Authorize()]
     [Route("api/[Controller]")]
+    [DisableCors]
     public class ContatoDrogariaController : Controller
     {
         private readonly IContatoDrogariaRepository _contatoDrogariaRepository;
@@ -20,8 +22,11 @@ namespace CampanhaInfopharma.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ContatoDrogaria> GetAll()
+        public IEnumerable<ContatoDrogaria> GetWithParams([FromQuery(Name = "drogariaId")] int drogariaId)
         {
+            if (drogariaId > 0)
+                return _contatoDrogariaRepository.FindByDrogariaId(drogariaId);
+
             return _contatoDrogariaRepository.GetAll();
         }
 

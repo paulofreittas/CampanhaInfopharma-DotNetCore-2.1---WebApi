@@ -6,6 +6,7 @@ using System.Text;
 using CampanhaInfopharma.IRepository;
 using CampanhaInfopharma.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace CampanhaInfopharma.Controllers
 {
     [Route("api/[Controller]")]
+    [DisableCors]
     public class AuthorizationController : Controller
     {
         private readonly IConfiguration _configuration;
