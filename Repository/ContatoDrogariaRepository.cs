@@ -26,6 +26,10 @@ namespace CampanhaInfopharma.Repository
             return _ctx.ContatoDrogarias.FirstOrDefault(c => c.DrogariaIdFk == id);
         }
 
+        public IEnumerable<ContatoDrogaria> FindByFuncionarioId(int funcionarioId) {
+            return _ctx.ContatoDrogarias.FromSql("select * from dbo.ContatoDrogaria where Id in (select MAX(cd.Id) from dbo.ContatoDrogaria cd inner join dbo.Drogaria d on d.Id = DrogariaIdFk where FuncionarioIdFk = {0} group by DrogariaIdFk)", funcionarioId).Include(x => x.Drogaria).OrderByDescending(x => x.DataAlteracao).ToList();
+        }
+
         public IEnumerable<ContatoDrogaria> FindByDrogariaId(int drogariaId) {
             return _ctx.ContatoDrogarias.Where(c => c.DrogariaIdFk == drogariaId).Include(x => x.Drogaria).ThenInclude(x => x.Funcionario);
         }

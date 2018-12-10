@@ -22,10 +22,12 @@ namespace CampanhaInfopharma.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ContatoDrogaria> GetWithParams([FromQuery(Name = "drogariaId")] int drogariaId)
+        public IEnumerable<ContatoDrogaria> GetWithParams([FromQuery(Name = "drogariaId")] int drogariaId, [FromQuery(Name = "funcionarioId")] int funcionarioId)
         {
             if (drogariaId > 0)
                 return _contatoDrogariaRepository.FindByDrogariaId(drogariaId);
+            else if (funcionarioId > 0)
+                return _contatoDrogariaRepository.FindByFuncionarioId(funcionarioId);
 
             return _contatoDrogariaRepository.GetAll();
         }
