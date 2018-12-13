@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CampanhaInfopharma.IRepository;
 using CampanhaInfopharma.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -22,14 +23,30 @@ namespace CampanhaInfopharma.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ContatoDrogaria> GetWithParams([FromQuery(Name = "drogariaId")] int drogariaId, [FromQuery(Name = "funcionarioId")] int funcionarioId)
+        public ContatoDrogariaDTO GetWithParams([FromQuery(Name = "drogariaId")] int drogariaId, [FromQuery(Name = "funcionarioId")] int funcionarioId, [FromQuery(Name = "search")] string search, [FromQuery(Name = "page")] int page)
         {
             if (drogariaId > 0)
-                return _contatoDrogariaRepository.FindByDrogariaId(drogariaId);
-            else if (funcionarioId > 0)
-                return _contatoDrogariaRepository.FindByFuncionarioId(funcionarioId);
+            {
+                var result = _contatoDrogariaRepository.FindByDrogariaId(drogariaId);
 
-            return _contatoDrogariaRepository.GetAll();
+                return new ContatoDrogariaDTO {
+                    NumeroResultados = 15,
+                    Pagina = 1,
+                    Resultado = result
+                };
+            }
+            else if (funcionarioId > 0)
+            {
+                var result = _contatoDrogariaRepository.FindByFuncionarioId(funcionarioId, search, page);
+
+                return new ContatoDrogariaDTO {
+                    NumeroResultados = result.Key,
+                    Pagina = page,
+                    Resultado = result.Value
+                };
+            }
+
+            return null;
         }
 
         [HttpGet("{id}", Name="GetContatoDrogaria")]
@@ -56,6 +73,36 @@ namespace CampanhaInfopharma.Controllers
             _contatoDrogariaRepository.Add(contatoDrogaria);
 
             return CreatedAtRoute("GetContatoDrogaria", new {Id = contatoDrogaria.Id}, contatoDrogaria);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                var contatoDrog = _contatoDrogariaRepository.Find(id);
+                var numeroDeContatos = _contatoDrogariaRepository.FindByDrogariaId(contatoDrog.Drogaria.Id).ToList().Count;
+
+                if (numeroDeContatos == 1)
+                {
+                    _contatoDrogariaRepository.Remove(id);
+
+                    var drog = contatoDrog.Drogaria;
+
+                    drog.Funcionario = null;
+
+                    _drogariaRepository.Update(drog);
+                }
+                else {
+                    _contatoDrogariaRepository.Remove(id);
+                }
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+
+            return new NoContentResult();
         }
     }
 }
