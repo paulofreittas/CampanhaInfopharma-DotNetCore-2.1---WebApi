@@ -20,9 +20,12 @@ namespace CampanhaInfopharma.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Funcionario> GetAll()
+        public IEnumerable<Funcionario> GetAll([FromQuery(Name = "search")] string search)
         {
-            return _funcionarioRepository.GetAll();
+            if (string.IsNullOrEmpty(search))
+                return _funcionarioRepository.GetAll();
+            else 
+                return _funcionarioRepository.GetWithParams(search);
         }
 
         [HttpGet("{id}", Name="GetFuncionario")]

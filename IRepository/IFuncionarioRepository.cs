@@ -7,6 +7,7 @@ namespace CampanhaInfopharma.IRepository
     {
          void Add(Funcionario funcionario);
          IEnumerable<Funcionario> GetAll();
+         IEnumerable<Funcionario> GetWithParams(string search);
          Funcionario Find(int id);
          void Remove(int id);
          void Update(Funcionario funcionario);

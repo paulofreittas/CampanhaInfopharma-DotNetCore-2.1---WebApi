@@ -3,6 +3,7 @@ using System.Linq;
 using CampanhaInfopharma.EFContext;
 using CampanhaInfopharma.IRepository;
 using CampanhaInfopharma.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CampanhaInfopharma.Repository
 {
@@ -28,6 +29,11 @@ namespace CampanhaInfopharma.Repository
         public IEnumerable<Funcionario> GetAll()
         {
             return _ctx.Funcionarios.ToList();
+        }
+
+        public IEnumerable<Funcionario> GetWithParams(string search)
+        {
+            return _ctx.Funcionarios.Where(x => x.Nome.Contains(search)).ToList();
         }
 
         public void Remove(int id)
