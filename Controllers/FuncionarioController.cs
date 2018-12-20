@@ -14,9 +14,11 @@ namespace CampanhaInfopharma.Controllers
     public class FuncionarioController : Controller
     {
         private readonly IFuncionarioRepository _funcionarioRepository;
-        public FuncionarioController(IFuncionarioRepository funcionarioRepository)
+        private readonly IContatoDrogariaRepository _contatoDrogariaRepository;
+        public FuncionarioController(IFuncionarioRepository funcionarioRepository, IContatoDrogariaRepository contatoDrogariaRepository)
         {
             _funcionarioRepository = funcionarioRepository;
+            _contatoDrogariaRepository = contatoDrogariaRepository;
         }
 
         [HttpGet]
@@ -76,6 +78,7 @@ namespace CampanhaInfopharma.Controllers
             if (func == null)
                 return NotFound();
 
+            _contatoDrogariaRepository.DeleteAllByFuncionarioId(id);
             _funcionarioRepository.Remove(id);
 
             return new NoContentResult();

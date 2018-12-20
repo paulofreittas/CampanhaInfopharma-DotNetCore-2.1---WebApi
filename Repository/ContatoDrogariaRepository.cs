@@ -60,6 +60,25 @@ namespace CampanhaInfopharma.Repository
             }
         }
 
+        public void DeleteAllByFuncionarioId(int id)
+        {
+            var drogs = _ctx.Drogarias.Where(x => x.FuncionarioIdFk == id);
+            var contatoDrogs = _ctx.ContatoDrogarias.FromSql("SELECT * FROM ContatoDrogaria WHERE DrogariaIdFk in (SELECT id FROM Drogaria WHERE FuncionarioIdFk = {0})", id).ToList();
+
+            foreach (var cd in contatoDrogs)
+            {
+                _ctx.ContatoDrogarias.Remove(cd);
+            }
+
+            foreach (var drog in drogs)
+            {
+                drog.FuncionarioIdFk = null;
+                _ctx.Drogarias.Update(drog);  
+            }
+
+            _ctx.SaveChanges();
+        }
+
         public void Update(ContatoDrogaria contatoDrogaria)
         {
             _ctx.ContatoDrogarias.Update(contatoDrogaria);

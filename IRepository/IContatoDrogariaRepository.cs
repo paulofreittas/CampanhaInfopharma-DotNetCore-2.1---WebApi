@@ -11,6 +11,7 @@ namespace CampanhaInfopharma.IRepository
         KeyValuePair<int, IEnumerable<ContatoDrogaria>> FindByFuncionarioId(int funcionarioId, string search, int page);
         IEnumerable<ContatoDrogaria> GetAll();
         void Remove (int id);
+        void DeleteAllByFuncionarioId(int id);
         void Update (ContatoDrogaria contatoDrogaria);
     }
 }
