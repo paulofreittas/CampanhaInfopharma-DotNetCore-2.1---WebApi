@@ -42,6 +42,7 @@ namespace CampanhaInfopharma.Repository
             if (func != null)
             {
                 _ctx.Funcionarios.Remove(func);
+                func = null;
                 _ctx.SaveChanges();
             }
         }

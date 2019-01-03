@@ -64,8 +64,11 @@ namespace CampanhaInfopharma.Controllers
 
             if (func == null)
                 return BadRequest();
-            else
-                func = funcionario;
+
+            func.Nome = funcionario.Nome;
+            func.Login = funcionario.Login;
+            func.Senha = funcionario.Senha;
+            func.CorMarcacao = funcionario.CorMarcacao;
 
             _funcionarioRepository.Update(func);
 
