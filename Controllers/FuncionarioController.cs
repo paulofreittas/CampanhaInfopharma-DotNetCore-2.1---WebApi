@@ -10,7 +10,7 @@ namespace CampanhaInfopharma.Controllers
 {
     [Authorize()]
     [Route("api/[Controller]")]
-    [DisableCors]
+    [EnableCors("AllowAll")]
     public class FuncionarioController : Controller
     {
         private readonly IFuncionarioRepository _funcionarioRepository;

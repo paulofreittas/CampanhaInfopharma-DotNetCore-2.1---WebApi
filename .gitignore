@@ -1,10 +1,3 @@
-obj/Debug/netcoreapp2.1/CampanhaInfopharma.csprojAssemblyReference.cache
-obj/Debug/netcoreapp2.1/CampanhaInfopharma.csproj.FileListAbsolute.txt
-obj/Debug/netcoreapp2.1/CampanhaInfopharma.csproj.CoreCompileInputs.cache
-obj/Debug/netcoreapp2.1/CampanhaInfopharma.assets.cache
-obj/Debug/netcoreapp2.1/CampanhaInfopharma.pdb
-obj/Debug/netcoreapp2.1/CampanhaInfopharma.dll
-obj/project.assets.json
-obj/CampanhaInfopharma.csproj.nuget.g.props
-obj/CampanhaInfopharma.csproj.nuget.cache
-obj/CampanhaInfopharma.csproj.EntityFrameworkCore.targets
+bin/Debug
+bin/Release
+obj

@@ -11,7 +11,7 @@ namespace CampanhaInfopharma.Controllers
 {
     [Authorize()]
     [Route("api/[Controller]")]
-    [DisableCors]
+    [EnableCors("AllowAll")]
     public class ContatoDrogariaController : Controller
     {
         private readonly IContatoDrogariaRepository _contatoDrogariaRepository;

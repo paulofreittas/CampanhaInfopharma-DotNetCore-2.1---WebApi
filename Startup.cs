@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace CampanhaInfopharma
 {
@@ -32,12 +33,13 @@ namespace CampanhaInfopharma
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("CampanhaInfopharma")));
-            services.AddTransient<IDrogariaRepository, DrogariaRepository>();
-            services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
-            services.AddTransient<IContatoDrogariaRepository, ContatoDrogariaRepository>(); 
+            services.AddDbContext<dbGestaoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CampanhaInfopharma")));
+            // services.AddTransient<IDrogariaRepository, DrogariaRepository>();
+            // services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
+            // services.AddTransient<IContatoDrogariaRepository, ContatoDrogariaRepository>(); 
+            services.AddTransient<IClienteRepository, ClienteRepository>();
 
-            services.AddCors();
+            services.AddCors(Options => Options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
                 options => {
@@ -63,7 +65,12 @@ namespace CampanhaInfopharma
                 }
             );
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+           // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddMvc().AddJsonOptions(options => {
+                var settings = options.SerializerSettings;
+                settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
         }
 
@@ -79,11 +86,7 @@ namespace CampanhaInfopharma
                 app.UseHsts();
             }
 
-            app.UseCors(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
+            app.UseCors("AllowAll");
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
