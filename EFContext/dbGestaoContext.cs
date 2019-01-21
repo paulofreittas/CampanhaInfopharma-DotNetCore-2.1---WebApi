@@ -28,6 +28,7 @@ namespace CampanhaInfopharma.EFContext
         public virtual DbSet<AspnetUsers> AspnetUsers { get; set; }
         public virtual DbSet<Bairro> Bairro { get; set; }
         public virtual DbSet<Banco> Banco { get; set; }
+        public virtual DbSet<Campanharenovacao> CampanhaRenovacao { get; set; }
         public virtual DbSet<Cedente> Cedente { get; set; }
         public virtual DbSet<Cheque> Cheque { get; set; }
         public virtual DbSet<Cidade> Cidade { get; set; }
@@ -45,6 +46,7 @@ namespace CampanhaInfopharma.EFContext
         public virtual DbSet<Configuracoesweb> Configuracoesweb { get; set; }
         public virtual DbSet<Conta> Conta { get; set; }
         public virtual DbSet<Contato> Contato { get; set; }
+        public virtual DbSet<Contatousuariocampanha> Contatousuariocampanha { get; set; }
         public virtual DbSet<Contrato> Contrato { get; set; }
         public virtual DbSet<Contratoparcelas> Contratoparcelas { get; set; }
         public virtual DbSet<Dadopesquisa> Dadopesquisa { get; set; }
@@ -664,6 +666,33 @@ namespace CampanhaInfopharma.EFContext
                 entity.Property(e => e.VersaoAplicativo)
                     .HasColumnName("versao_aplicativo")
                     .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<Campanharenovacao>(entity =>
+            {
+                entity.HasKey(e => e.IdPk);
+
+                entity.ToTable("CAMPANHARENOVACAO");
+
+                entity.Property(e => e.IdPk).HasColumnName("Id_pk");
+
+                entity.Property(e => e.AnoReferencia).HasColumnName("ano_referencia");
+
+                entity.Property(e => e.DataAlteracao)
+                    .HasColumnName("data_alteracao")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DataFim)
+                    .HasColumnName("data_fim")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DataInclusao)
+                    .HasColumnName("data_inclusao")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DataInicio)
+                    .HasColumnName("data_inicio")
+                    .HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Cedente>(entity =>
@@ -1809,6 +1838,53 @@ namespace CampanhaInfopharma.EFContext
                 entity.Property(e => e.RazaoSocial)
                     .HasColumnName("razao_social")
                     .HasMaxLength(150);
+            });
+
+            modelBuilder.Entity<Contatousuariocampanha>(entity =>
+            {
+                entity.HasKey(e => e.IdPk);
+
+                entity.ToTable("CONTATOUSUARIOCAMPANHA");
+
+                entity.Property(e => e.IdPk).HasColumnName("Id_pk");
+
+                entity.Property(e => e.CampanhaRenovacaoIdFk).HasColumnName("campanha_renovacao_id_fk");
+
+                entity.Property(e => e.ClienteIdFk).HasColumnName("cliente_id_fk");
+
+                entity.Property(e => e.DataAlteracao)
+                    .HasColumnName("data_alteracao")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DataInclusao)
+                    .HasColumnName("data_inclusao")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Observacao)
+                    .HasColumnName("observacao")
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.TipoProposta).HasColumnName("tipo_proposta");
+
+                entity.Property(e => e.UsuarioIdFk).HasColumnName("usuario_id_fk");
+
+                entity.HasOne(d => d.CampanhaRenovacaoIdFkNavigation)
+                    .WithMany(p => p.Contatousuariocampanha)
+                    .HasForeignKey(d => d.CampanhaRenovacaoIdFk)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CONTATOUSUARIOCAMPANHA_CAMPANHARENOVACAO");
+
+                entity.HasOne(d => d.ClienteIdFkNavigation)
+                    .WithMany(p => p.Contatousuariocampanha)
+                    .HasForeignKey(d => d.ClienteIdFk)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CONTATOUSUARIOCAMPANHA_CLIENTE");
+
+                entity.HasOne(d => d.UsuarioIdFkNavigation)
+                    .WithMany(p => p.Contatousuariocampanha)
+                    .HasForeignKey(d => d.UsuarioIdFk)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CONTATOUSUARIOCAMPANHA_USUARIO");
             });
 
             modelBuilder.Entity<Contrato>(entity =>

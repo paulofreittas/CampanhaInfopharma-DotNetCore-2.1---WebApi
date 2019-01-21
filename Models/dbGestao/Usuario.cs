@@ -8,6 +8,7 @@ namespace CampanhaInfopharma.Models.dbGestao
         public Usuario()
         {
             Comissaousuario = new HashSet<Comissaousuario>();
+            Contatousuariocampanha = new HashSet<Contatousuariocampanha>();
             Emailmarketing = new HashSet<Emailmarketing>();
             Historiconovosservicos = new HashSet<Historiconovosservicos>();
             Permissaousuario = new HashSet<Permissaousuario>();
@@ -44,6 +45,7 @@ namespace CampanhaInfopharma.Models.dbGestao
         public Fornecedor FornecedorIdFkNavigation { get; set; }
         public Regrausuario RegrausuarioIdFkNavigation { get; set; }
         public ICollection<Comissaousuario> Comissaousuario { get; set; }
+        public ICollection<Contatousuariocampanha> Contatousuariocampanha { get; set; }
         public ICollection<Emailmarketing> Emailmarketing { get; set; }
         public ICollection<Historiconovosservicos> Historiconovosservicos { get; set; }
         public ICollection<Permissaousuario> Permissaousuario { get; set; }

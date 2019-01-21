@@ -13,9 +13,31 @@ namespace CampanhaInfopharma.Repository
         {
             _ctx = ctx;
         }
+
+        public Cliente Find(int id)
+        {
+            return _ctx.Cliente.Find(id);
+        }
         public IEnumerable<Cliente> GetAll()
         {
-            return _ctx.Cliente.Skip(100).Take(10).ToList();
+            return _ctx.Cliente.ToList();
+        }
+
+        public void Remove(int id)
+        {
+            var cliente = _ctx.Cliente.FirstOrDefault(c => c.IdPk == id);
+
+            if (cliente != null)
+            {
+                _ctx.Cliente.Remove(cliente);
+                _ctx.SaveChanges();
+            }
+        }
+
+        public void Update(Cliente cliente)
+        {
+            _ctx.Update(cliente);
+            _ctx.SaveChanges();
         }
     }
 }
