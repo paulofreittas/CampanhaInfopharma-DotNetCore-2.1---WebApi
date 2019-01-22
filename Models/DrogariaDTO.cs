@@ -6,6 +6,6 @@ namespace CampanhaInfopharma.Models
     {
         public int NumeroResultados { get; set; }
         public int Pagina { get; set; } 
-        public IEnumerable<Drogaria> Resultado { get; set; }
+        public IEnumerable<ClienteFuncionario> Resultado { get; set; }
     }
 }

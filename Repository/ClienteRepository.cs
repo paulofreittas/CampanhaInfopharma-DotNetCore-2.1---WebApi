@@ -3,6 +3,7 @@ using System.Linq;
 using CampanhaInfopharma.EFContext;
 using CampanhaInfopharma.IRepository;
 using CampanhaInfopharma.Models.dbGestao;
+using Microsoft.EntityFrameworkCore;
 
 namespace CampanhaInfopharma.Repository
 {
@@ -23,21 +24,29 @@ namespace CampanhaInfopharma.Repository
             return _ctx.Cliente.ToList();
         }
 
-        public void Remove(int id)
+        public KeyValuePair<int, IEnumerable<Cliente>> GetWithParams(string search, bool semFuncVinculado, int page)
         {
-            var cliente = _ctx.Cliente.FirstOrDefault(c => c.IdPk == id);
+            int numeroItens = 0;
 
-            if (cliente != null)
+            if (semFuncVinculado)
             {
-                _ctx.Cliente.Remove(cliente);
-                _ctx.SaveChanges();
-            }
-        }
+                if (string.IsNullOrEmpty(search))
+                {
+                    var script = "SELECT * FROM CLIENTE WHERE Id_pk NOT IN (SELECT cliente_id_fk FROM CONTATOUSUARIOCAMPANHA)";
 
-        public void Update(Cliente cliente)
-        {
-            _ctx.Update(cliente);
-            _ctx.SaveChanges();
+                    numeroItens = _ctx.Cliente.FromSql(script).Count();
+                    return new KeyValuePair<int, IEnumerable<Cliente>>(numeroItens, _ctx.Cliente.FromSql(script).Skip(15*(page)).Take(15).ToList());
+                }
+                else {
+                    var script = string.Format("SELECT * FROM CLIENTE WHERE Id_pk NOT IN (SELECT cliente_id_fk FROM CONTATOUSUARIOCAMPANHA) and razao_social like '%{0}%' or nome_fantasia like '%{0}%' or nome_contato_drogaria like '%{0}%'", search);
+
+                    numeroItens = _ctx.Cliente.FromSql(script).Count();
+                    return new KeyValuePair<int, IEnumerable<Cliente>>(numeroItens, _ctx.Cliente.FromSql(script).Skip(15*(page)).Take(15).ToList());
+                }
+            }
+            else {
+                return new KeyValuePair<int, IEnumerable<Cliente>>(numeroItens, _ctx.Cliente.Skip(15*(page)).Take(15).ToList());
+            }
         }
     }
 }
