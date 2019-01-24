@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CampanhaInfopharma.IRepository;
+using CampanhaInfopharma.Models;
 using CampanhaInfopharma.Models.dbGestao;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +16,20 @@ namespace CampanhaInfopharma.Controllers
             _clienteRepository = clienteRepository;
         }
 
+        // [HttpGet]
+        // public IEnumerable<Cliente> GetAll() {
+        //     return _clienteRepository.GetAll();
+        // }
+
+        [HttpGet("{id}", Name="id")]
+        public Cliente FindById(int id) {
+            return _clienteRepository.Find(2);
+        }
+
         [HttpGet]
-        public IEnumerable<Cliente> GetAll() {
-            return _clienteRepository.GetAll();
+        public DrogariaDTO GetWithParams([FromQuery(Name = "search")] string search, [FromQuery(Name = "semFuncVinculado")] bool semFuncVinculado, [FromQuery(Name = "page")] int page)
+        {
+            return _clienteRepository.GetWithParams(search, semFuncVinculado, page);
         }
     }
 }

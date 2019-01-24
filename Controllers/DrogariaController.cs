@@ -26,19 +26,19 @@ namespace CampanhaInfopharma.Controllers
         //     return _drogariaRepository.GetAll();
         // }
 
-        [HttpGet]
-        public DrogariaDTO GetWithParams([FromQuery(Name = "search")] string search, [FromQuery(Name = "semFuncVinculado")] bool semFuncVinculado, [FromQuery(Name = "page")] int page)
-        {
-            var result = _drogariaRepository.GetWithParams(search, semFuncVinculado, page);
-          //  var numberItens = result as ICollection<Drogaria>;
+        // [HttpGet]
+        // public DrogariaDTO GetWithParams([FromQuery(Name = "search")] string search, [FromQuery(Name = "semFuncVinculado")] bool semFuncVinculado, [FromQuery(Name = "page")] int page)
+        // {
+        //     var result = _drogariaRepository.GetWithParams(search, semFuncVinculado, page);
+        //   //  var numberItens = result as ICollection<Drogaria>;
 
-            return new DrogariaDTO {
-                NumeroResultados = result.Key,
-                Pagina = page,
-                Resultado = result.Value
-            };
-           // return _drogariaRepository.GetWithParams(search, page);
-        }
+        //     return new DrogariaDTO {
+        //         NumeroResultados = result.Key,
+        //         Pagina = page,
+        //         Resultado = result.Value
+        //     };
+        //    // return _drogariaRepository.GetWithParams(search, page);
+        // }
 
         [HttpGet("{id}", Name="GetDrogaria")]
         public IActionResult FindById(int id)

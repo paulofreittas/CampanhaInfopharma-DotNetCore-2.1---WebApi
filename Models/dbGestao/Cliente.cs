@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CampanhaInfopharma.Models.dbGestao
 {
@@ -101,6 +102,7 @@ namespace CampanhaInfopharma.Models.dbGestao
         public int? Distribuidora4 { get; set; }
         public int? EmpresaSoftwareGestaoIdFk { get; set; }
         public bool? Matriz { get; set; }
+        [NotMapped]
         public int? ClienteIdFk { get; set; }
         public string UsuarioFp { get; set; }
         public string SenhaFp { get; set; }
@@ -141,6 +143,7 @@ namespace CampanhaInfopharma.Models.dbGestao
         public ICollection<Formulariopbm> FormulariopbmClienteIdFkNavigation { get; set; }
         public ICollection<Formulariopbm> FormulariopbmRedeIdFkNavigation { get; set; }
         public ICollection<Historicoafe> Historicoafe { get; set; }
+        [NotMapped]
         public ICollection<Cliente> InverseClienteIdFkNavigation { get; set; }
         public ICollection<Legal> Legal { get; set; }
         public ICollection<Ligacao> Ligacao { get; set; }

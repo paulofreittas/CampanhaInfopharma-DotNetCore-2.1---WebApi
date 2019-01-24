@@ -5,6 +5,6 @@ namespace CampanhaInfopharma.Models
     public class ClienteFuncionario
     {
         public Cliente Cliente { get; set; }
-        public Funcionario Funcionario { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }
