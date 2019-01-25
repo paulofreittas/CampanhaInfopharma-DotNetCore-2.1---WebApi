@@ -9,9 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CampanhaInfopharma.Controllers
 {
-    [Authorize()]
+    // [Authorize()]
     [Route("api/[Controller]")]
-    [EnableCors("AllowAll")]
+    // [EnableCors("AllowAll")]
+    [DisableCors]
     public class ContatoDrogariaController : Controller
     {
         private readonly IContatoDrogariaRepository _contatoDrogariaRepository;

@@ -20,49 +20,62 @@ namespace CampanhaInfopharma.Repository
         {
             return _ctx.Cliente.Where(x => x.IdPk == id).Include(x => x.Contatousuariocampanha).ThenInclude(x => x.UsuarioIdFkNavigation).Include(x => x.CidadeIdFkNavigation).FirstOrDefault();
         }
-        public IEnumerable<Cliente> GetAll()
-        {
-            return _ctx.Cliente.ToList();
-        }
 
         public DrogariaDTO GetWithParams(string search, bool semFuncVinculado, int page)
         {
             int numeroItens = 0;
-            string script = "";
-            var clientesFunc = new List<ClienteFuncionario>();
             var clientes = new List<Cliente>();
 
             if (semFuncVinculado)
             {
                 if (string.IsNullOrEmpty(search))
                 {
-                    script = "SELECT * FROM CLIENTE WHERE Id_pk NOT IN (SELECT cliente_id_fk FROM CONTATOUSUARIOCAMPANHA)";
+                    clientes = _ctx.Cliente.Include(x => x.Contatousuariocampanha)
+                                           .ThenInclude(x => x.UsuarioIdFkNavigation)
+                                           .Include(x => x.CidadeIdFkNavigation)
+                                           .Where(x => x.Inativo == false)
+                                           .Where(x => !x.Contatousuariocampanha.Any())
+                                           .Skip(15 * (page)).Take(15).ToList();
 
-                    numeroItens = _ctx.Cliente.FromSql(script).Count();
+                    numeroItens = _ctx.Cliente.Include(x => x.Contatousuariocampanha)
+                                           .ThenInclude(x => x.UsuarioIdFkNavigation)
+                                           .Include(x => x.CidadeIdFkNavigation)
+                                           .Where(x => x.Inativo == false)
+                                           .Where(x => !x.Contatousuariocampanha.Any())
+                                           .Count();
                 }
                 else
                 {
-                    script = string.Format("SELECT * FROM CLIENTE WHERE Id_pk NOT IN (SELECT cliente_id_fk FROM CONTATOUSUARIOCAMPANHA) and razao_social like '%{0}%' or nome_fantasia like '%{0}%' or nome_contato_drogaria like '%{0}%'", search);
+                    clientes = _ctx.Cliente.Include(x => x.Contatousuariocampanha)
+                                           .ThenInclude(x => x.UsuarioIdFkNavigation)
+                                           .Include(x => x.CidadeIdFkNavigation)
+                                           .Where(x => x.Inativo == false)
+                                           .Where(x => !x.Contatousuariocampanha.Any())
+                                           .Where(x => x.NomeFantasia.Contains(search) ||
+                                                  x.RazaoSocial.Contains(search) ||
+                                                  x.NomeContatoDrogaria.Contains(search) ||
+                                                  x.CidadeIdFkNavigation.NomeCidade.Contains(search) ||
+                                                  x.Cnpj.Contains(search))
+                                           .Skip(15 * (page)).Take(15).ToList();
 
-                    numeroItens = _ctx.Cliente.FromSql(script).Count();
-                }
-
-                clientes = _ctx.Cliente.FromSql(script).Skip(15 * (page)).Take(15).ToList();
-
-                foreach (var cliente in clientes)
-                {
-                    clientesFunc.Add(new ClienteFuncionario()
-                    {
-                        Cliente = cliente,
-                        Usuario = null
-                    });
+                    numeroItens = _ctx.Cliente.Include(x => x.Contatousuariocampanha)
+                                           .ThenInclude(x => x.UsuarioIdFkNavigation)
+                                           .Include(x => x.CidadeIdFkNavigation)
+                                           .Where(x => x.Inativo == false)
+                                           .Where(x => !x.Contatousuariocampanha.Any())
+                                           .Where(x => x.NomeFantasia.Contains(search) ||
+                                                  x.RazaoSocial.Contains(search) ||
+                                                  x.NomeContatoDrogaria.Contains(search) ||
+                                                  x.CidadeIdFkNavigation.NomeCidade.Contains(search) ||
+                                                  x.Cnpj.Contains(search))
+                                           .Count();
                 }
 
                 var result = new DrogariaDTO()
                 {
                     NumeroResultados = numeroItens,
                     Pagina = page,
-                    Resultado = clientesFunc
+                    Resultado = clientes
                 };
 
                 return result;
@@ -71,43 +84,51 @@ namespace CampanhaInfopharma.Repository
             {
                 if (string.IsNullOrEmpty(search))
                 {
-                    clientes = _ctx.Cliente.Skip(15 * (page)).Take(15).ToList();
+                    clientes = _ctx.Cliente.Include(x => x.Contatousuariocampanha)
+                                           .ThenInclude(x => x.UsuarioIdFkNavigation)
+                                           .Include(x => x.CidadeIdFkNavigation)
+                                           .Where(x => x.Inativo == false)
+                                           .Skip(15 * (page)).Take(15).ToList();
 
-                    numeroItens = clientes.Count();
+                    numeroItens = _ctx.Cliente.Include(x => x.Contatousuariocampanha)
+                                           .ThenInclude(x => x.UsuarioIdFkNavigation)
+                                           .Include(x => x.CidadeIdFkNavigation)
+                                           .Where(x => x.Inativo == false)
+                                           .Count();
                 }
-                else {
-                    clientes = _ctx.Cliente.Include(p => p.CidadeIdFkNavigation.NomeCidade).Where(x => x.RazaoSocial.Contains(search)    || 
-                                                                                                      x.NomeFantasia.Contains(search)        || 
-                                                                                                      x.NomeContatoDrogaria.Contains(search) || 
-                                                                                                      x.CidadeIdFkNavigation.NomeCidade.Contains(search))
-                                    .Skip(15 * (page)).Take(15).ToList();
-                    
-                    numeroItens = clientes.Count();
+                else
+                {
+                    clientes = _ctx.Cliente.Include(x => x.Contatousuariocampanha)
+                                           .ThenInclude(x => x.UsuarioIdFkNavigation)
+                                           .Include(x => x.CidadeIdFkNavigation)
+                                           .Where(x => x.Inativo == false)
+                                           .Where(x => x.NomeFantasia.Contains(search) ||
+                                                  x.RazaoSocial.Contains(search) ||
+                                                  x.NomeContatoDrogaria.Contains(search) ||
+                                                  x.CidadeIdFkNavigation.NomeCidade.Contains(search) ||
+                                                  x.Cnpj.Contains(search))
+                                           .Skip(15 * (page)).Take(15).ToList();
+
+                    numeroItens = _ctx.Cliente.Include(x => x.Contatousuariocampanha)
+                                           .ThenInclude(x => x.UsuarioIdFkNavigation)
+                                           .Include(x => x.CidadeIdFkNavigation)
+                                           .Where(x => x.Inativo == false)
+                                           .Where(x => x.NomeFantasia.Contains(search) ||
+                                                  x.RazaoSocial.Contains(search) ||
+                                                  x.NomeContatoDrogaria.Contains(search) ||
+                                                  x.CidadeIdFkNavigation.NomeCidade.Contains(search) ||
+                                                  x.Cnpj.Contains(search))
+                                           .Count();
                 }
 
-                 foreach (var cliente in clientes)
-                    {
-                        var func = new Usuario();
-                        var funcId = _ctx.Contatousuariocampanha.Where(x => x.ClienteIdFk == cliente.IdPk).FirstOrDefault()?.UsuarioIdFk;
+                var result = new DrogariaDTO()
+                {
+                    NumeroResultados = numeroItens,
+                    Pagina = page,
+                    Resultado = clientes
+                };
 
-                        if (funcId > 0)
-                            func = _ctx.Usuario.Find(funcId);
-
-                        clientesFunc.Add(new ClienteFuncionario()
-                        {
-                            Cliente = cliente,
-                            Usuario = func
-                        });
-                    }
-
-                    var result = new DrogariaDTO()
-                    {
-                        NumeroResultados = numeroItens,
-                        Pagina = page,
-                        Resultado = clientesFunc
-                    };
-
-                    return result;
+                return result;
             }
         }
     }

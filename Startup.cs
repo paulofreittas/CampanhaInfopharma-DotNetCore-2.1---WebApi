@@ -34,9 +34,9 @@ namespace CampanhaInfopharma
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<dbGestaoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CampanhaInfopharma")));
-            // services.AddTransient<IDrogariaRepository, DrogariaRepository>();
-            // services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
-            // services.AddTransient<IContatoDrogariaRepository, ContatoDrogariaRepository>(); 
+            services.AddTransient<IDrogariaRepository, DrogariaRepository>();
+            services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
+            services.AddTransient<IContatoDrogariaRepository, ContatoDrogariaRepository>(); 
             services.AddTransient<IClienteRepository, ClienteRepository>();
 
             services.AddCors(Options => Options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));

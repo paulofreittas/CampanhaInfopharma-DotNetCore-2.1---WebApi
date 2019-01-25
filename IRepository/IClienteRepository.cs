@@ -6,7 +6,6 @@ namespace CampanhaInfopharma.IRepository
 {
     public interface IClienteRepository
     {
-        IEnumerable<Cliente> GetAll();
         Cliente Find(int id);
         DrogariaDTO GetWithParams(string search, bool semFuncVinculado, int page);
 

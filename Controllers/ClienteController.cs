@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using CampanhaInfopharma.IRepository;
 using CampanhaInfopharma.Models;
 using CampanhaInfopharma.Models.dbGestao;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CampanhaInfopharma.Controllers
 {
     [Route("api/[Controller]")]
+    [DisableCors]
     public class ClienteController : Controller
     {
         private readonly IClienteRepository _clienteRepository;
@@ -23,7 +25,7 @@ namespace CampanhaInfopharma.Controllers
 
         [HttpGet("{id}", Name="id")]
         public Cliente FindById(int id) {
-            return _clienteRepository.Find(2);
+            return _clienteRepository.Find(id);
         }
 
         [HttpGet]

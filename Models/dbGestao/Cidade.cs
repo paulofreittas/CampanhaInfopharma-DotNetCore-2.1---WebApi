@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace CampanhaInfopharma.Models.dbGestao
 {
@@ -24,6 +26,7 @@ namespace CampanhaInfopharma.Models.dbGestao
 
         public ICollection<Bairro> Bairro { get; set; }
         public ICollection<Cidadeabrangencia> Cidadeabrangencia { get; set; }
+        [JsonIgnore]
         public ICollection<Cliente> Cliente { get; set; }
         public ICollection<Fornecedor> Fornecedor { get; set; }
         public ICollection<Responsavel> Responsavel { get; set; }
