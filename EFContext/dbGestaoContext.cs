@@ -1860,11 +1860,17 @@ namespace CampanhaInfopharma.EFContext
                     .HasColumnName("data_inclusao")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.DataRetorno)
+                    .HasColumnName("data_retorno")
+                    .HasColumnType("datetime");
+
                 entity.Property(e => e.Observacao)
                     .HasColumnName("observacao")
                     .HasMaxLength(250);
 
                 entity.Property(e => e.TipoProposta).HasColumnName("tipo_proposta");
+
+                entity.Property(e => e.Status).HasColumnName("status");
 
                 entity.Property(e => e.UsuarioIdFk).HasColumnName("usuario_id_fk");
 

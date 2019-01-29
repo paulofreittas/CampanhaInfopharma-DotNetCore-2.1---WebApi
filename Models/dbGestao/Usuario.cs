@@ -38,7 +38,7 @@ namespace CampanhaInfopharma.Models.dbGestao
         public int? CidadeIdFk { get; set; }
         public int? BairroIdFk { get; set; }
         public string Shortcuts { get; set; }
-        public int? Cor { get; set; }
+        public string Cor { get; set; }
 
         public Bairro BairroIdFkNavigation { get; set; }
         public Cidade CidadeIdFkNavigation { get; set; }

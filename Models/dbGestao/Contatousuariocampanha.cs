@@ -13,7 +13,8 @@ namespace CampanhaInfopharma.Models.dbGestao
         public int CampanhaRenovacaoIdFk { get; set; }
         public string Observacao { get; set; }
         public int TipoProposta { get; set; }
-
+        public DateTime? DataRetorno { get; set; }
+        public int? Status { get; set; }
         public Campanharenovacao CampanhaRenovacaoIdFkNavigation { get; set; }
         public Cliente ClienteIdFkNavigation { get; set; }
         public Usuario UsuarioIdFkNavigation { get; set; }
