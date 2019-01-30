@@ -9,10 +9,9 @@ using Newtonsoft.Json.Linq;
 
 namespace CampanhaInfopharma.Controllers
 {
-    // [Authorize()]
+    [Authorize()]
     [Route("api/[Controller]")]
-    // [EnableCors("AllowAll")]
-    [DisableCors]
+    [EnableCors("AllowAll")]
     public class DrogariaController : Controller
     {
         private readonly IDrogariaRepository _drogariaRepository;

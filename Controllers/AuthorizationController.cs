@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using CampanhaInfopharma.IRepository;
 using CampanhaInfopharma.Models;
+using CampanhaInfopharma.Models.dbGestao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace CampanhaInfopharma.Controllers
 {
     [Route("api/[Controller]")]
-    [DisableCors]
+    [EnableCors("AllowAll")]
     public class AuthorizationController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -28,14 +29,14 @@ namespace CampanhaInfopharma.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult RequestToken([FromBody] Funcionario request)
+        public IActionResult RequestToken([FromBody] Usuario request)
         {
-            var func = _funcionarioRepository.GetAll().Where(c => c.Login == request.Login && c.Senha == request.Senha).FirstOrDefault();
+            var func = _funcionarioRepository.GetAll().Where(c => c.Username == request.Username && c.Password == request.Password).FirstOrDefault();
 
             if (func != null)
             {
                 var claims = new[]{
-                    new Claim("nome", func.Nome)
+                    new Claim("nome", func?.Nome)
                 };
 
                 // recebe uma instância da classe SymmetricSecurityKey
@@ -55,11 +56,11 @@ namespace CampanhaInfopharma.Controllers
 
                 return Ok (new {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    id = func.Id,
-                    login = func.Login,
-                    senha = func.Senha,
+                    idPk = func.IdPk,
+                    username = func.Username,
+                    password = func.Password,
                     nome = func.Nome,
-                    corMarcacao = func.CorMarcacao
+                    cor = func.Cor
                 });
             }
 

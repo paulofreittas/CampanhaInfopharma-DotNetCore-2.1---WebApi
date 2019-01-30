@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using CampanhaInfopharma.IRepository;
 using CampanhaInfopharma.Models;
+using CampanhaInfopharma.Models.dbGestao;
 using CampanhaInfopharma.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -8,10 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CampanhaInfopharma.Controllers
 {
-    // [Authorize()]
+    [Authorize()]
     [Route("api/[Controller]")]
-    // [EnableCors("AllowAll")]
-    [DisableCors]
+    [EnableCors("AllowAll")]
     public class FuncionarioController : Controller
     {
         private readonly IFuncionarioRepository _funcionarioRepository;
@@ -23,7 +24,7 @@ namespace CampanhaInfopharma.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Funcionario> GetAll([FromQuery(Name = "search")] string search)
+        public IEnumerable<Usuario> GetAll([FromQuery(Name = "search")] string search)
         {
             if (string.IsNullOrEmpty(search))
                 return _funcionarioRepository.GetAll();
@@ -44,21 +45,21 @@ namespace CampanhaInfopharma.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult Add([FromBody]Funcionario funcionario)
-        {
-            if (funcionario == null)
-                return BadRequest();
+        // [HttpPost]
+        // public IActionResult Add([FromBody]Funcionario funcionario)
+        // {
+        //     if (funcionario == null)
+        //         return BadRequest();
             
-            _funcionarioRepository.Add(funcionario);
+        //     _funcionarioRepository.Add(funcionario);
 
-            return CreatedAtRoute("GetFuncionario", new {Id = funcionario.Id}, funcionario);
-        }
+        //     return CreatedAtRoute("GetFuncionario", new {Id = funcionario.Id}, funcionario);
+        // }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody]Funcionario funcionario)
+        public IActionResult Update(int id, [FromBody]Usuario funcionario)
         {
-            if (funcionario == null || funcionario.Id != id)
+            if (funcionario == null || funcionario.IdPk != id)
                 return BadRequest();
 
             var func = _funcionarioRepository.Find(id);
@@ -66,28 +67,29 @@ namespace CampanhaInfopharma.Controllers
             if (func == null)
                 return BadRequest();
 
+            func.DataAlteracao = DateTime.Now;
             func.Nome = funcionario.Nome;
-            func.Login = funcionario.Login;
-            func.Senha = funcionario.Senha;
-            func.CorMarcacao = funcionario.CorMarcacao;
+            func.Username = funcionario.Username;
+            func.Password = funcionario.Password;
+            func.Cor = funcionario.Cor;
 
             _funcionarioRepository.Update(func);
 
             return new NoContentResult();
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            var func = _funcionarioRepository.Find(id);
+        // [HttpDelete("{id}")]
+        // public IActionResult Delete(int id)
+        // {
+        //     var func = _funcionarioRepository.Find(id);
 
-            if (func == null)
-                return NotFound();
+        //     if (func == null)
+        //         return NotFound();
 
-            _contatoDrogariaRepository.DeleteAllByFuncionarioId(id);
-            _funcionarioRepository.Remove(id);
+        //     _contatoDrogariaRepository.DeleteAllByFuncionarioId(id);
+        //     _funcionarioRepository.Remove(id);
 
-            return new NoContentResult();
-        }
+        //     return new NoContentResult();
+        // }
     }
 }

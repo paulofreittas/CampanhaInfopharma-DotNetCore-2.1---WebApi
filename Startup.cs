@@ -34,12 +34,13 @@ namespace CampanhaInfopharma
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<dbGestaoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CampanhaInfopharma")));
-            services.AddTransient<IDrogariaRepository, DrogariaRepository>();
-            services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
             services.AddTransient<IContatoDrogariaRepository, ContatoDrogariaRepository>(); 
             services.AddTransient<IClienteRepository, ClienteRepository>();
+            services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
 
             services.AddCors(Options => Options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
+            // services.AddCors();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
                 options => {
@@ -86,7 +87,12 @@ namespace CampanhaInfopharma
                 app.UseHsts();
             }
 
-            app.UseCors("AllowAll");
+           app.UseCors("AllowAll");
+        //    app.UseCors(builder => builder
+        //         .AllowAnyOrigin()
+        //         .AllowAnyMethod()
+        //         .AllowAnyHeader()
+        //         .AllowCredentials());
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
