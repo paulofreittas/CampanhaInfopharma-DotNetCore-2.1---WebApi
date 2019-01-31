@@ -78,18 +78,17 @@ namespace CampanhaInfopharma.Controllers
             return new NoContentResult();
         }
 
-        // [HttpDelete("{id}")]
-        // public IActionResult Delete(int id)
-        // {
-        //     var func = _funcionarioRepository.Find(id);
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var func = _funcionarioRepository.Find(id);
 
-        //     if (func == null)
-        //         return NotFound();
+            if (func == null)
+                return NotFound();
 
-        //     _contatoDrogariaRepository.DeleteAllByFuncionarioId(id);
-        //     _funcionarioRepository.Remove(id);
+            _funcionarioRepository.Remove(id);
 
-        //     return new NoContentResult();
-        // }
+            return new NoContentResult();
+        }
     }
 }

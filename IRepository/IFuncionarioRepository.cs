@@ -10,7 +10,7 @@ namespace CampanhaInfopharma.IRepository
          IEnumerable<Usuario> GetAll();
          IEnumerable<Usuario> GetWithParams(string search);
          Usuario Find(int id);
-         //void Remove(int id);
+         void Remove(int id);
          void Update(Usuario funcionario);
     }
 }

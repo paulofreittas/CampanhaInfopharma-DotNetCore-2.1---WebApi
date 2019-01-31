@@ -38,13 +38,13 @@ namespace CampanhaInfopharma.Controllers
             }
             else if (funcionarioId > 0)
             {
-                // var result = _contatoDrogariaRepository.FindByFuncionarioId(funcionarioId, search, page);
+                var result = _contatoDrogariaRepository.FindByFuncionarioId(funcionarioId, search, page);
 
-                // return new ContatoDrogariaDTO {
-                //     NumeroResultados = result.Key,
-                //     Pagina = page,
-                //     Resultado = result.Value
-                // };
+                return new ContatoDrogariaDTO {
+                    NumeroResultados = result.Key,
+                    Pagina = page,
+                    Resultado = result.Value
+                };
             }
 
             return null;
@@ -79,34 +79,19 @@ namespace CampanhaInfopharma.Controllers
             return CreatedAtRoute("GetContatoDrogaria", new {Id = contatoDrogaria.IdPk}, contatoDrogaria);
         }
 
-        // [HttpDelete("{id}")]
-        // public IActionResult Delete(int id)
-        // {
-        //     try
-        //     {
-        //         var contatoDrog = _contatoDrogariaRepository.Find(id);
-        //         var numeroDeContatos = _contatoDrogariaRepository.FindByDrogariaId(contatoDrog.Drogaria.Id).ToList().Count;
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _contatoDrogariaRepository.Remove(id);
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
 
-        //         if (numeroDeContatos == 1)
-        //         {
-        //             _contatoDrogariaRepository.Remove(id);
-
-        //             var drog = contatoDrog.Drogaria;
-
-        //             drog.Funcionario = null;
-
-        //             _drogariaRepository.Update(drog);
-        //         }
-        //         else {
-        //             _contatoDrogariaRepository.Remove(id);
-        //         }
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     return new NoContentResult();
-        // }
+            return new NoContentResult();
+        }
     }
 }

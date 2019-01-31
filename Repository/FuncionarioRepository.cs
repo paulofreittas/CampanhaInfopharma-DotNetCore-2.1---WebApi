@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CampanhaInfopharma.EFContext;
@@ -39,16 +40,18 @@ namespace CampanhaInfopharma.Repository
                                .Where(x => x.Inativo == false).ToList();
         }
 
-        // public void Remove(int id)
-        // {
-        //     var func = _ctx.Funcionarios.FirstOrDefault(c => c.Id == id);
-        //     if (func != null)
-        //     {
-        //         _ctx.Funcionarios.Remove(func);
-        //         func = null;
-        //         _ctx.SaveChanges();
-        //     }
-        // }
+        public void Remove(int id)
+        {
+            var user = _ctx.Usuario.FirstOrDefault(c => c.IdPk == id);
+            if (user != null)
+            {
+                user.Inativo = true;
+                user.DataAlteracao = DateTime.Now;
+
+                _ctx.Usuario.Update(user);
+                _ctx.SaveChanges();
+            }
+        }
 
         public void Update(Usuario funcionario)
         {

@@ -27,19 +27,46 @@ namespace CampanhaInfopharma.Repository
             return _ctx.Contatousuariocampanha.FirstOrDefault(c => c.IdPk == id);
         }
 
-        // public KeyValuePair<int, IEnumerable<Contatousuariocampanha>> FindByFuncionarioId(int funcionarioId, string search, int page) {
-        //     int numeroItens = 0;
+        public KeyValuePair<int, IEnumerable<Contatousuariocampanha>> FindByFuncionarioId(int funcionarioId, string search, int page) {
+            int numeroItens = 0;
 
-        //     if (string.IsNullOrEmpty(search))
-        //     {
-        //         numeroItens = _ctx.Contatousuariocampanha.FromSql("select * from dbo.ContatoDrogaria where Id in (select MAX(cd.Id) from dbo.ContatoDrogaria cd inner join dbo.Drogaria d on d.Id = DrogariaIdFk where FuncionarioIdFk = {0} group by DrogariaIdFk)", funcionarioId).Count();
-        //         return new KeyValuePair<int, IEnumerable<ContatoDrogaria>>(numeroItens, _ctx.ContatoDrogarias.FromSql("select * from dbo.ContatoDrogaria where Id in (select MAX(cd.Id) from dbo.ContatoDrogaria cd inner join dbo.Drogaria d on d.Id = DrogariaIdFk where FuncionarioIdFk = {0} group by DrogariaIdFk)", funcionarioId).Include(x => x.Drogaria).OrderByDescending(x => x.DataAlteracao).Skip(15*(page)).Take(15).ToList());
-        //     }
-        //     else {
-        //         numeroItens = _ctx.ContatoDrogarias.FromSql(string.Format("select * from dbo.ContatoDrogaria where Id in (select MAX(cd.Id) from dbo.ContatoDrogaria cd inner join dbo.Drogaria d on d.Id = DrogariaIdFk where FuncionarioIdFk = {0} and (d.RazaoSocial like '%{1}%' or d.NomeFantasia like '%{1}%' or d.CNPJ like '%{1}%' or d.NomeContato like '%{1}%' or d.Cidade like '%{1}%' or d.Estado like '%{1}%')  group by DrogariaIdFk)", funcionarioId, search)).Include(x => x.Drogaria).OrderByDescending(x => x.DataAlteracao).Count();
-        //         return new KeyValuePair<int, IEnumerable<ContatoDrogaria>>(numeroItens, _ctx.ContatoDrogarias.FromSql(string.Format("select * from dbo.ContatoDrogaria where Id in (select MAX(cd.Id) from dbo.ContatoDrogaria cd inner join dbo.Drogaria d on d.Id = DrogariaIdFk where FuncionarioIdFk = {0} and (d.RazaoSocial like '%{1}%' or d.NomeFantasia like '%{1}%' or d.CNPJ like '%{1}%' or d.NomeContato like '%{1}%' or d.Cidade like '%{1}%' or d.Estado like '%{1}%')  group by DrogariaIdFk)", funcionarioId, search)).Include(x => x.Drogaria).OrderByDescending(x => x.DataAlteracao).ToList());
-        //     }
-        // }
+            if (string.IsNullOrEmpty(search))
+            {
+                var result = _ctx.Contatousuariocampanha.FromSql("select * from CONTATOUSUARIOCAMPANHA where id_pk in " +
+                                                                "(select Max(cup.id_pk) from CONTATOUSUARIOCAMPANHA cup " +
+		                                                        "inner join cliente c on cup.cliente_id_fk = c.Id_pk " +
+		                                                        "inner join cidade cd on c.cidade_id_fk = cd.Id_pk " +
+		                                                        "where cup.usuario_id_fk = {0} " + 
+		                                                        "group by cup.cliente_id_fk)", funcionarioId).
+                                                                OrderByDescending(x => x.DataAlteracao).
+                                                                Include(x => x.ClienteIdFkNavigation).
+                                                                ThenInclude(x => x.CidadeIdFkNavigation).
+                                                                Include(x => x.UsuarioIdFkNavigation).
+                                                                Skip(15 * (page)).Take(15).ToList();
+                numeroItens = result.Count();                             
+                return new KeyValuePair<int, IEnumerable<Contatousuariocampanha>>(numeroItens, result);
+            }
+            else {
+                var result = _ctx.Contatousuariocampanha.FromSql("select * from CONTATOUSUARIOCAMPANHA where id_pk in " +
+                                                                "(select Max(cup.id_pk) from CONTATOUSUARIOCAMPANHA cup " +
+		                                                        "inner join cliente c on cup.cliente_id_fk = c.Id_pk " +
+		                                                        "inner join cidade cd on c.cidade_id_fk = cd.Id_pk " +
+		                                                        "where cup.usuario_id_fk = {0} " + 
+                                                                "and (c.razao_social like '%{1}%' or " + 
+                                                                "c.nome_fantasia like '%{1}%' or " +
+                                                                "c.cnpj like '%{1}%' or " + 
+                                                                "c.nome_contato_drogaria like '%{1}%' or " +
+                                                                "cd.nome_cidade like '%{1}%')" +
+		                                                        "group by cup.cliente_id_fk) ", funcionarioId, search).
+                                                                OrderByDescending(x => x.DataAlteracao).
+                                                                Include(x => x.ClienteIdFkNavigation).
+                                                                ThenInclude(x => x.CidadeIdFkNavigation).
+                                                                Include(x => x.UsuarioIdFkNavigation).
+                                                                Skip(15 * (page)).Take(15).ToList();
+                numeroItens = result.Count();                             
+                return new KeyValuePair<int, IEnumerable<Contatousuariocampanha>>(numeroItens, result);
+            }
+        }
 
         public IEnumerable<Contatousuariocampanha> FindByDrogariaId(int drogariaId) {
             return _ctx.Contatousuariocampanha.Where(c => c.ClienteIdFk == drogariaId).Include(x => x.ClienteIdFkNavigation).Include(x => x.UsuarioIdFkNavigation);
@@ -50,16 +77,16 @@ namespace CampanhaInfopharma.Repository
         //     return _ctx.ContatoDrogarias.Include(c => c.Drogaria).ThenInclude(c => c.Funcionario).ToList();
         // }
 
-        // public void Remove(int id)
-        // {
-        //     var contatoDrog = _ctx.ContatoDrogarias.FirstOrDefault(c => c.Id == id);
+        public void Remove(int id)
+        {
+            var contatoDrog = _ctx.Contatousuariocampanha.FirstOrDefault(c => c.IdPk == id);
 
-        //     if (contatoDrog != null)
-        //     {
-        //         _ctx.ContatoDrogarias.Remove(contatoDrog);
-        //         _ctx.SaveChanges();
-        //     }
-        // }
+            if (contatoDrog != null)
+            {
+                _ctx.Contatousuariocampanha.Remove(contatoDrog);
+                _ctx.SaveChanges();
+            }
+        }
 
         // public void DeleteAllByFuncionarioId(int id)
         // {
