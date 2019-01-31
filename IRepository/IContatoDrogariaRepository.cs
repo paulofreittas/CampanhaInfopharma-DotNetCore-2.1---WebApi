@@ -7,8 +7,8 @@ namespace CampanhaInfopharma.IRepository
     public interface IContatoDrogariaRepository
     {
         void Add(Contatousuariocampanha contatoDrogaria);
-        // ContatoDrogaria Find(int id);
-        // IEnumerable<ContatoDrogaria> FindByDrogariaId(int drogariaId);
+        Contatousuariocampanha Find(int id);
+        IEnumerable<Contatousuariocampanha> FindByDrogariaId(int drogariaId);
         // KeyValuePair<int, IEnumerable<ContatoDrogaria>> FindByFuncionarioId(int funcionarioId, string search, int page);
         // IEnumerable<ContatoDrogaria> GetAll();
         // void Remove (int id);

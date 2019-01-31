@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CampanhaInfopharma.Models.dbGestao;
 
 namespace CampanhaInfopharma.Models
 {
@@ -6,6 +7,6 @@ namespace CampanhaInfopharma.Models
     {
         public int NumeroResultados { get; set; }
         public int Pagina { get; set; }
-        public IEnumerable<ContatoDrogaria> Resultado { get; set; }
+        public IEnumerable<Contatousuariocampanha> Resultado { get; set; }
     }
 }

@@ -22,17 +22,17 @@ namespace CampanhaInfopharma.Repository
             _ctx.SaveChanges();
         }
 
-        // public ContatoDrogaria Find(int id)
-        // {
-        //     return _ctx.ContatoDrogarias.Include(c => c.Drogaria).FirstOrDefault(c => c.Id == id);
-        // }
+        public Contatousuariocampanha Find(int id)
+        {
+            return _ctx.Contatousuariocampanha.FirstOrDefault(c => c.IdPk == id);
+        }
 
-        // public KeyValuePair<int, IEnumerable<ContatoDrogaria>> FindByFuncionarioId(int funcionarioId, string search, int page) {
+        // public KeyValuePair<int, IEnumerable<Contatousuariocampanha>> FindByFuncionarioId(int funcionarioId, string search, int page) {
         //     int numeroItens = 0;
 
         //     if (string.IsNullOrEmpty(search))
         //     {
-        //         numeroItens = _ctx.ContatoDrogarias.FromSql("select * from dbo.ContatoDrogaria where Id in (select MAX(cd.Id) from dbo.ContatoDrogaria cd inner join dbo.Drogaria d on d.Id = DrogariaIdFk where FuncionarioIdFk = {0} group by DrogariaIdFk)", funcionarioId).Count();
+        //         numeroItens = _ctx.Contatousuariocampanha.FromSql("select * from dbo.ContatoDrogaria where Id in (select MAX(cd.Id) from dbo.ContatoDrogaria cd inner join dbo.Drogaria d on d.Id = DrogariaIdFk where FuncionarioIdFk = {0} group by DrogariaIdFk)", funcionarioId).Count();
         //         return new KeyValuePair<int, IEnumerable<ContatoDrogaria>>(numeroItens, _ctx.ContatoDrogarias.FromSql("select * from dbo.ContatoDrogaria where Id in (select MAX(cd.Id) from dbo.ContatoDrogaria cd inner join dbo.Drogaria d on d.Id = DrogariaIdFk where FuncionarioIdFk = {0} group by DrogariaIdFk)", funcionarioId).Include(x => x.Drogaria).OrderByDescending(x => x.DataAlteracao).Skip(15*(page)).Take(15).ToList());
         //     }
         //     else {
@@ -41,9 +41,9 @@ namespace CampanhaInfopharma.Repository
         //     }
         // }
 
-        // public IEnumerable<ContatoDrogaria> FindByDrogariaId(int drogariaId) {
-        //     return _ctx.ContatoDrogarias.Where(c => c.DrogariaIdFk == drogariaId).Include(x => x.Drogaria).ThenInclude(x => x.Funcionario);
-        // }
+        public IEnumerable<Contatousuariocampanha> FindByDrogariaId(int drogariaId) {
+            return _ctx.Contatousuariocampanha.Where(c => c.ClienteIdFk == drogariaId).Include(x => x.ClienteIdFkNavigation).Include(x => x.UsuarioIdFkNavigation);
+        }
 
         // public IEnumerable<ContatoDrogaria> GetAll()
         // {

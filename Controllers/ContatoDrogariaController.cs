@@ -23,43 +23,43 @@ namespace CampanhaInfopharma.Controllers
             // _drogariaRepository = drogariaRepository;
         }
 
-        // [HttpGet]
-        // public ContatoDrogariaDTO GetWithParams([FromQuery(Name = "drogariaId")] int drogariaId, [FromQuery(Name = "funcionarioId")] int funcionarioId, [FromQuery(Name = "search")] string search, [FromQuery(Name = "page")] int page)
-        // {
-        //     if (drogariaId > 0)
-        //     {
-        //         var result = _contatoDrogariaRepository.FindByDrogariaId(drogariaId);
+        [HttpGet]
+        public ContatoDrogariaDTO GetWithParams([FromQuery(Name = "drogariaId")] int drogariaId, [FromQuery(Name = "funcionarioId")] int funcionarioId, [FromQuery(Name = "search")] string search, [FromQuery(Name = "page")] int page)
+        {
+            if (drogariaId > 0)
+            {
+                var result = _contatoDrogariaRepository.FindByDrogariaId(drogariaId);
 
-        //         return new ContatoDrogariaDTO {
-        //             NumeroResultados = 15,
-        //             Pagina = 1,
-        //             Resultado = result
-        //         };
-        //     }
-        //     else if (funcionarioId > 0)
-        //     {
-        //         var result = _contatoDrogariaRepository.FindByFuncionarioId(funcionarioId, search, page);
+                return new ContatoDrogariaDTO {
+                    NumeroResultados = 15,
+                    Pagina = 1,
+                    Resultado = result
+                };
+            }
+            else if (funcionarioId > 0)
+            {
+                // var result = _contatoDrogariaRepository.FindByFuncionarioId(funcionarioId, search, page);
 
-        //         return new ContatoDrogariaDTO {
-        //             NumeroResultados = result.Key,
-        //             Pagina = page,
-        //             Resultado = result.Value
-        //         };
-        //     }
+                // return new ContatoDrogariaDTO {
+                //     NumeroResultados = result.Key,
+                //     Pagina = page,
+                //     Resultado = result.Value
+                // };
+            }
 
-        //     return null;
-        // }
+            return null;
+        }
 
-        // [HttpGet("{id}", Name="GetContatoDrogaria")]
-        // public IActionResult FindById(int id)
-        // {
-        //     var conatoDrog = _contatoDrogariaRepository.Find(id);
+        [HttpGet("{id}", Name="GetContatoDrogaria")]
+        public IActionResult FindById(int id)
+        {
+            var contatoDrog = _contatoDrogariaRepository.Find(id);
 
-        //     if (conatoDrog == null)
-        //         return NotFound();
+            if (contatoDrog == null)
+                return NotFound();
 
-        //     return new ObjectResult(conatoDrog);
-        // }
+            return new ObjectResult(contatoDrog);
+        }
 
         [HttpPost]
         public IActionResult Add([FromBody]Contatousuariocampanha contatoDrogaria)
@@ -67,7 +67,7 @@ namespace CampanhaInfopharma.Controllers
             if (contatoDrogaria == null || contatoDrogaria.ClienteIdFk == 0)
                 return BadRequest();
 
-            if (contatoDrogaria?.TipoProposta != 2)
+            if (contatoDrogaria?.Status != 2)
                 contatoDrogaria.DataRetorno = null;
             
             contatoDrogaria.DataInclusao = DateTime.Now;
