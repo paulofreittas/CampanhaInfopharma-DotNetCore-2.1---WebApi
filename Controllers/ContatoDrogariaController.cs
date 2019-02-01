@@ -24,7 +24,7 @@ namespace CampanhaInfopharma.Controllers
         }
 
         [HttpGet]
-        public ContatoDrogariaDTO GetWithParams([FromQuery(Name = "drogariaId")] int drogariaId, [FromQuery(Name = "funcionarioId")] int funcionarioId, [FromQuery(Name = "search")] string search, [FromQuery(Name = "page")] int page)
+        public ContatoDrogariaDTO GetWithParams([FromQuery(Name = "drogariaId")] int drogariaId, [FromQuery(Name = "funcionarioId")] int funcionarioId, [FromQuery(Name = "status")] int status, [FromQuery(Name = "search")] string search, [FromQuery(Name = "page")] int page)
         {
             if (drogariaId > 0)
             {
@@ -38,7 +38,7 @@ namespace CampanhaInfopharma.Controllers
             }
             else if (funcionarioId > 0)
             {
-                var result = _contatoDrogariaRepository.FindByFuncionarioId(funcionarioId, search, page);
+                var result = _contatoDrogariaRepository.FindByFuncionarioId(funcionarioId, status, search, page);
 
                 return new ContatoDrogariaDTO {
                     NumeroResultados = result.Key,
@@ -67,7 +67,7 @@ namespace CampanhaInfopharma.Controllers
             if (contatoDrogaria == null || contatoDrogaria.ClienteIdFk == 0)
                 return BadRequest();
 
-            if (contatoDrogaria?.Status != 2)
+            if (contatoDrogaria?.Status != 3)
                 contatoDrogaria.DataRetorno = null;
             
             contatoDrogaria.DataInclusao = DateTime.Now;
