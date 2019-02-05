@@ -37,6 +37,7 @@ namespace CampanhaInfopharma
             services.AddTransient<IContatoDrogariaRepository, ContatoDrogariaRepository>(); 
             services.AddTransient<IClienteRepository, ClienteRepository>();
             services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
+            services.AddTransient<IDashboardRepository, DashboardRepository>();
 
             services.AddCors(Options => Options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
