@@ -15,11 +15,14 @@ namespace CampanhaInfopharma.Controllers
         }
 
         [HttpGet]
-        public DashboardDTO GetResults() {
-            try {
+        public DashboardDTO GetResults()
+        {
+            try
+            {
                 return _dashboardController.GetResults();
             }
-            catch (Exception e) {
+            catch (Exception)
+            {
                 return new DashboardDTO();
             }
         }

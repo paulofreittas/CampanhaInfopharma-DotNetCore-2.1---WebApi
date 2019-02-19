@@ -30,7 +30,8 @@ namespace CampanhaInfopharma.Controllers
             {
                 var result = _contatoDrogariaRepository.FindByDrogariaId(drogariaId);
 
-                return new ContatoDrogariaDTO {
+                return new ContatoDrogariaDTO
+                {
                     NumeroResultados = 15,
                     Pagina = 1,
                     Resultado = result
@@ -40,7 +41,8 @@ namespace CampanhaInfopharma.Controllers
             {
                 var result = _contatoDrogariaRepository.FindByFuncionarioId(funcionarioId, status, search, page);
 
-                return new ContatoDrogariaDTO {
+                return new ContatoDrogariaDTO
+                {
                     NumeroResultados = result.Key,
                     Pagina = page,
                     Resultado = result.Value
@@ -50,7 +52,7 @@ namespace CampanhaInfopharma.Controllers
             return null;
         }
 
-        [HttpGet("{id}", Name="GetContatoDrogaria")]
+        [HttpGet("{id}", Name = "GetContatoDrogaria")]
         public IActionResult FindById(int id)
         {
             var contatoDrog = _contatoDrogariaRepository.Find(id);
@@ -69,14 +71,14 @@ namespace CampanhaInfopharma.Controllers
 
             if (contatoDrogaria?.Status != 3)
                 contatoDrogaria.DataRetorno = null;
-            
+
             contatoDrogaria.DataInclusao = DateTime.Now;
             contatoDrogaria.DataAlteracao = DateTime.Now;
             contatoDrogaria.CampanhaRenovacaoIdFk = 1; // hardcode
 
             _contatoDrogariaRepository.Add(contatoDrogaria);
 
-            return CreatedAtRoute("GetContatoDrogaria", new {Id = contatoDrogaria.IdPk}, contatoDrogaria);
+            return CreatedAtRoute("GetContatoDrogaria", new { Id = contatoDrogaria.IdPk }, contatoDrogaria);
         }
 
         [HttpDelete("{id}")]
@@ -86,7 +88,7 @@ namespace CampanhaInfopharma.Controllers
             {
                 _contatoDrogariaRepository.Remove(id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return NotFound();
             }

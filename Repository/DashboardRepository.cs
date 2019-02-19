@@ -18,7 +18,7 @@ namespace CampanhaInfopharma.Repository
         public DashboardDTO GetResults()
         {
             var dataAtual = DateTime.Now.Date;
-            var inicioCampanha = new DateTime(2018, 10, 1);
+            var inicioCampanha = new DateTime(2018, 8, 1);
             var finalCampanha = new DateTime(2019, 1, 30);
             var result = new DashboardDTO();
 
@@ -57,7 +57,11 @@ namespace CampanhaInfopharma.Repository
                                                            .Where(x => x.DataInclusao >= inicioCampanha && x.DataInclusao <= finalCampanha).Count();
 
                 result.DadosUsuarios.Add(dadosUser);
+
+                result.TotalContratosFechados = result.TotalContratosFechados + dadosUser.ContratosFechados;
             }
+
+            result.DadosUsuarios = result.DadosUsuarios.OrderByDescending(x => x.ContratosFechados).ToList();
 
             return result;
         }
